@@ -47,7 +47,7 @@ def main():
 	valB = 0
 	valG = 0		#actual color value picked each time
 	numToSub = 0						#keep track of '<' && '>'
-
+	cycles = 30
 
 
 	random.seed() 
@@ -60,24 +60,31 @@ def main():
 		deltaG = abs(valG - 50)
 		deltaB = abs(valB - 50)
 
-		modR = deltaR%30
-		modG = deltaG%30
-		modB = deltaB%30
+		modR = deltaR%cycles
+		modG = deltaG%cycles
+		modB = deltaB%cycles
 
-		if (valR < 50):
-			dirR = 1
-		else:
-			dirR = -1
-		if (valG < 50):
-			dirG = 1
-		else:
-			dirG = -1
-		if (valB < 50):
-			dirB = 1
-		else:
-			dirB = -1
-		for i in range(0,30):
-			clr(valR + i*modR*dirR, valG + i*modG*dirG, valB + i*modB*dirB)			
+		r = valR
+		g = valG
+		b = valB
+
+		for i in range(0,cycles):
+			if (valR < 50):
+				r = r + ((delta/cycles) * 2)
+			else:
+				r = r - ((delta/cycles) * 2)
+
+			if (valG < 50):
+				g = g + ((delta/cycles) * 2)
+			else:
+				g = g - ((delta/cycles) * 2)
+
+			if (valB < 50):
+				b = b + ((delta/cycles) * 2)
+			else:
+				b = b - ((delta/cycles) * 2)
+
+			clr(r,g,b)
 
 
 		'''while(k < 30):
