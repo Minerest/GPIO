@@ -70,21 +70,22 @@ def main():
 
 		for i in range(0,cycles):
 			if (valR < 50):
-				r = r + ((delta/cycles) * 2)
+				r = r + ((deltaR/cycles) * 2)
 			else:
-				r = r - ((delta/cycles) * 2)
+				r = r - ((deltaR/cycles) * 2)
 
 			if (valG < 50):
-				g = g + ((delta/cycles) * 2)
+				g = g + ((deltaG/cycles) * 2)
 			else:
-				g = g - ((delta/cycles) * 2)
+				g = g - ((deltaG/cycles) * 2)
 
 			if (valB < 50):
-				b = b + ((delta/cycles) * 2)
+				b = b + ((deltaB/cycles) * 2)
 			else:
-				b = b - ((delta/cycles) * 2)
+				b = b - ((deltaB/cycles) * 2)
 
 			clr(r,g,b)
+			time.sleep(2)
 
 
 		'''while(k < 30):
