@@ -4,9 +4,9 @@ import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 
 ###########GLOBALS################
-red = 17
-green = 22
-blue = 27
+blue = 17
+red = 22
+green = 27
 
 GPIO.setup(red, GPIO.OUT)
 GPIO.setup(blue, GPIO.OUT)
@@ -21,12 +21,40 @@ B.start(0)
 G = GPIO.PWM(green,100)
 G.start(0)
 
+#Function to quickly use the python terminal after running this script.
+def startGPIO(red, green, blue):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(red, GPIO.OUT)
+        GPIO.setup(blue, GPIO.OUT)
+        GPIO.setup(green, GPIO.OUT)
+        R = GPIO.PWM(red, 100)
+        R.start(0)
+
+        B = GPIO.PWM(blue, 100)
+        B.start(0)
+
+        G = GPIO.PWM(green,100)
+        G.start(0)
+
 #################-----------------------#####################
 #################-----------------------#####################
 #################-----------------------#####################
 #################-----------------------#####################
 
-def clr(red, green, blue): #<- time is a total duration for the loop
+def clr(red, green, blue): 
+	#Try to prevent a crash if a bad value is passed in.
+	if (red > 100):
+		red = 100
+	elif (red < 0):
+		red = 0
+	if (blue > 100):
+		blue = 100
+	elif (blue < 0):
+		blue = 0
+	if (green > 100):
+		green = 100
+	elif (green < 0):
+		green = 0
 	
 	print("CHANGE DUTY CYCLE")
 	R.ChangeDutyCycle(red)
@@ -67,7 +95,8 @@ def main():
 		r = valR
 		g = valG
 		b = valB
-
+		print("test")
+		
 		for i in range(0,cycles):
 			if (valR < 50):
 				r = r + ((deltaR/cycles) * 2)
@@ -85,46 +114,12 @@ def main():
 				b = b - ((deltaB/cycles) * 2)
 
 			clr(r,g,b)
-			time.sleep(2)
-
-
-		'''while(k < 30):
-			print("K LOOP")
-			valR = random.randint(0,100)
-			valG = random.randint(0,100)
-			valB = random.randint(0,100)
-			print ("R G B = "+str(valR)+" "+str(valG)+" "+str(valG))
-			deltaR = abs(valR - 50)
-			deltaG = abs(valG - 50)
-			deltaB = abs(valB - 50)
-
-			modR = deltaR%30
-			modB = deltaB%30
-			modG = deltaG%30
-
-			if (valR - 50 < 0):
-				dirR = 1
-			else:
-				dirR = -1
-			
-			if (valG - 50 < 0):
-				dirG = 1
-			else:
-				dirG = -1
-				
-			if (valB - 50 < 0):
-				dirB = 1
-			else:
-				dirB = -1
-
-			for i in range(0,10):
-				rd = random.randint(0,100)
-				gn = random.randint(0,100)
-				bl = random.randint(0,100)
-				clr(rd,gn,bl)
-				time.sleep(0.1)
-			k+=1
-			time.sleep(0.05)'''
+			print("R= "+str(r)+" g= "+str(g)+" b= "+str(b))
+			time.sleep(0.05)
+		for i in range(0, 50):
+			clr(100-i*2,i*2,i*2)
+			print(i)
+			time.sleep(0.05)
 
 	except Exception as e:
 		print(e)
